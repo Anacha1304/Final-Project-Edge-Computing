@@ -14,7 +14,7 @@ Los usuarios objetivo son principalmente dueños de pequeños negocios, propieta
 
 El diseño de este sistema se fundamenta en el uso de **Computación en el Borde (Edge Computing)** debido a las exigencias de tiempo de respuesta, disponibilidad continua y manejo de datos sensibles propias de los sistemas de seguridad física.
 
-En un enfoque basado únicamente en la nube, los datos capturados por sensores (movimiento, sonido, imagen) tendrían que ser enviados a servidores remotos para su procesamiento, lo que introduce latencias variables dependiendo de la calidad de la conexión. En un sistema de seguridad, incluso retrasos de pocos segundos pueden ser críticos, ya que decisiones como bloquear una cerradura o activar una alarma deben ejecutarse de manera inmediata. Al procesar estos eventos directamente en el dispositivo Edge, se elimina la dependencia del tiempo de ida y vuelta de la red (round-trip time), garantizando respuestas en tiempo real.
+En un enfoque basado únicamente en la nube, los datos capturados por sensores (movimiento, imagen) tendrían que ser enviados a servidores remotos para su procesamiento, lo que introduce latencias variables dependiendo de la calidad de la conexión. En un sistema de seguridad, incluso retrasos de pocos segundos pueden ser críticos, ya que decisiones como bloquear una cerradura o activar una alarma deben ejecutarse de manera inmediata. Al procesar estos eventos directamente en el dispositivo Edge, se elimina la dependencia del tiempo de ida y vuelta de la red (round-trip time), garantizando respuestas en tiempo real.
 
 Adicionalmente, el uso de Edge Computing permite una **preservación significativa del ancho de banda**, ya que no es necesario transmitir continuamente flujos de datos como video o audio hacia la nube. En su lugar, el procesamiento local filtra y analiza la información, enviando únicamente eventos relevantes o registros cuando sea necesario, lo que reduce la carga sobre la red y mejora la eficiencia del sistema.
 
@@ -32,7 +32,7 @@ En conjunto, la Computación en el Borde no solo mejora el rendimiento del siste
 
 El sistema se basa en una arquitectura de computación en el borde en la que se distribuyen las funciones entre un microcontrolador ESP32 y una Raspberry Pi 5. Esta distribución permite asignar las tareas según la capacidad de cada dispositivo, optimizando el rendimiento y garantizando la operación autónoma del sistema.
 
-El ESP32 se encarga de la captura de datos provenientes de sensores como movimiento, sonido o mecanismos de acceso, además de ejecutar acciones inmediatas sobre actuadores como cerraduras o alarmas. Por otro lado, la Raspberry Pi 5 realiza el procesamiento local de mayor complejidad, incluyendo la detección de eventos sospechosos, la validación de usuarios autorizados y la toma de decisiones del sistema.
+El ESP32 se encarga de la captura de datos provenientes de sensores como movimiento o mecanismos de acceso, además de ejecutar acciones inmediatas sobre actuadores como cerraduras o alarmas. Por otro lado, la Raspberry Pi 5 realiza el procesamiento local de mayor complejidad, incluyendo la detección de eventos sospechosos, la validación de usuarios autorizados y la toma de decisiones del sistema.
 
 De manera opcional, el sistema puede conectarse a la nube para el almacenamiento de registros o monitoreo remoto, sin que esta conexión sea necesaria para su funcionamiento principal.
 
@@ -40,32 +40,33 @@ De manera opcional, el sistema puede conectarse a la nube para el almacenamiento
 
 ### Diagrama de bloques
 
+<img width="1759" height="761" alt="image" src="https://github.com/user-attachments/assets/1e6b0373-4186-4fb3-b94d-f6fc23a0e124" />
+
+
 
 #### Flujo de funcionamiento
 
 1. **Captura de datos**
    - Sensores de movimiento detectan presencia o cambios en el entorno  
-   - Sensores de sonido identifican eventos anómalos (golpes, ruidos)  
    - Cámara permite capturar imágenes o secuencias para validación de acceso  
    - Dispositivos de entrada (teclado, RFID u otros) permiten autenticación  
 
-2. **Procesamiento inicial en ESP32**
-   - Lectura continua de sensores  
-   - Filtrado de ruido o eventos irrelevantes  
-   - Generación de eventos simples (ej. movimiento detectado)  
-   - Activación inmediata de actuadores en casos críticos básicos  
-
-3. **Procesamiento principal en Raspberry Pi 5**
-   - Recepción de eventos desde el ESP32  
-   - Correlación de datos de múltiples sensores  
+2. **Procesamiento principal en Raspberry Pi 5**
+   - Recepción directa de datos provenientes de sensores o sistemas conectados  
+   - Análisis de eventos en tiempo real  
    - Validación de usuarios (por ejemplo, rostro autorizado o patrón válido)  
    - Clasificación de eventos como normales o sospechosos  
-   - Ejecución de lógica de decisión del sistema  
+   - Ejecución de la lógica de decisión del sistema  
 
-4. **Ejecución de acciones**
-   - Bloqueo o desbloqueo de cerraduras  
+3. **Ejecución de acciones a través del ESP32**
+   - Recepción de órdenes desde la Raspberry Pi 5  
+   - Control de cerraduras electrónicas  
    - Activación de alarmas  
-   - Generación de alertas visuales o sonoras  
+   - Encendido de luces o señales de alerta  
+
+4. **Salida de información**
+   - Visualización de alertas en pantalla local  
+   - Notificaciones del estado del sistema  
 
 5. **Interacción con la nube (opcional)**
    - Registro de eventos para auditoría  
@@ -73,7 +74,6 @@ De manera opcional, el sistema puede conectarse a la nube para el almacenamiento
    - Respaldo de información  
 
 Esta organización permite que el sistema funcione de forma completamente autónoma en el borde, manteniendo la nube como un componente complementario y no crítico.
-
 ---
 
 ### Presupuesto estimado
@@ -84,7 +84,6 @@ Esta organización permite que el sistema funcione de forma completamente autón
 | ESP32                  | Control de sensores y actuadores     | 8 - 15                |
 | Cámara                 | Captura de imagen/video              | 15 - 30               |
 | Sensor de movimiento   | Detección de presencia               | 3 - 8                 |
-| Sensor de sonido       | Detección de eventos acústicos       | 3 - 8                 |
 | Cerradura electrónica  | Control de acceso físico             | 15 - 40               |
 | Alarma / buzzer        | Señalización de eventos              | 2 - 6                 |
 | Fuente y cableado      | Alimentación y conexión              | 10 - 20               |
@@ -107,7 +106,7 @@ El ESP32 es un microcontrolador optimizado para aplicaciones de bajo consumo y p
 - **Memoria limitada:** restringe el manejo de múltiples sensores y procesos simultáneos en el sistema  
 - **Capacidad de procesamiento baja:** no permite ejecutar tareas como reconocimiento facial o análisis de video, por lo que estas deben delegarse a la Raspberry Pi 5  
 - **Almacenamiento reducido:** solo permite guardar firmware y datos temporales, no registros históricos o imágenes del sistema  
-- **Limitación en pines de conexión:** restringe la cantidad de sensores (movimiento, sonido, cerraduras) que se pueden conectar directamente  
+- **Limitación en pines de conexión:** restringe la cantidad de sensores (movimiento, cerraduras) que se pueden conectar directamente  
 - **Dependencia de comunicación inalámbrica:** puede presentar fallos o interferencias en la transmisión de datos hacia la Raspberry Pi  
 - **Limitación en manejo de periféricos complejos:** no es adecuado para manejar directamente cámaras o dispositivos de alto consumo de datos  
 
@@ -146,10 +145,3 @@ A partir de las restricciones anteriores, se definieron las siguientes decisione
 - Utilizar la nube únicamente como componente de apoyo para monitoreo y almacenamiento  
 
 En conjunto, estas decisiones permiten construir un sistema eficiente, autónomo y alineado con las limitaciones reales del hardware embebido, cumpliendo con los principios fundamentales de la computación en el borde.
-
-```mermaid
-flowchart LR
-    A[Datos de entrada<br/>Sensores de movimiento<br/>Sensor de sonido<br/>Cámara<br/>Lector de acceso] --> B[ESP32<br/>Lectura de sensores<br/>Filtrado básico<br/>Control inmediato]
-    B --> C[Raspberry Pi 5<br/>Procesamiento local<br/>Detección de eventos<br/>Validación de acceso<br/>Lógica de decisión]
-    C --> D[Salida local<br/>Cerradura inteligente<br/>Alarma<br/>Pantalla o alerta visual]
-    C --> E[Nube opcional<br/>Registro de eventos<br/>Monitoreo remoto<br/>Respaldo]
