@@ -152,3 +152,11 @@ En conjunto, estas decisiones permiten construir un sistema eficiente, autónomo
 El producto mínimo viable (MVP) está compuesto por las funcionalidades esenciales que permiten el funcionamiento básico del sistema de seguridad, incluyendo la detección de movimiento, la validación de accesos y la activación de mecanismos de respuesta como cerraduras y alarmas.
 
 Las funcionalidades adicionales, como monitoreo remoto o almacenamiento en la nube, se consideran mejoras opcionales (nice-to-have) y no son necesarias para el funcionamiento inicial del sistema.
+
+## Cronograma del Proyecto
+
+El siguiente diagrama presenta el cronograma tentativo del proyecto, organizado en Sprints de una semana agrupados en Releases de dos semanas. Cada Release representa un avance funcional del sistema, iniciando con la validación de la viabilidad técnica (Spike) y finalizando con la entrega del sistema completo.
+
+<img width="1045" height="1115" alt="image" src="https://github.com/user-attachments/assets/ea8d912f-07a8-4746-ba9e-40dcba4ec931" />
+
+
