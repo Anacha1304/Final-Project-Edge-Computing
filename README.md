@@ -157,6 +157,8 @@ Las funcionalidades adicionales, como monitoreo remoto o almacenamiento en la nu
 
 El siguiente diagrama presenta el cronograma tentativo del proyecto, organizado en Sprints de una semana agrupados en Releases de dos semanas. Cada Release representa un avance funcional del sistema, iniciando con la validación de la viabilidad técnica (Spike) y finalizando con la entrega del sistema completo.
 
-<img width="1045" height="1115" alt="image" src="https://github.com/user-attachments/assets/ea8d912f-07a8-4746-ba9e-40dcba4ec931" />
+<img width="1113" height="1178" alt="image" src="https://github.com/user-attachments/assets/f964deee-070a-4c61-bd98-56991c66edad" />
+
+
 
 
