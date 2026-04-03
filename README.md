@@ -145,3 +145,10 @@ A partir de las restricciones anteriores, se definieron las siguientes decisione
 - Utilizar la nube únicamente como componente de apoyo para monitoreo y almacenamiento  
 
 En conjunto, estas decisiones permiten construir un sistema eficiente, autónomo y alineado con las limitaciones reales del hardware embebido, cumpliendo con los principios fundamentales de la computación en el borde.
+
+
+## Definición del MVP
+
+El producto mínimo viable (MVP) está compuesto por las funcionalidades esenciales que permiten el funcionamiento básico del sistema de seguridad, incluyendo la detección de movimiento, la validación de accesos y la activación de mecanismos de respuesta como cerraduras y alarmas.
+
+Las funcionalidades adicionales, como monitoreo remoto o almacenamiento en la nube, se consideran mejoras opcionales (nice-to-have) y no son necesarias para el funcionamiento inicial del sistema.
