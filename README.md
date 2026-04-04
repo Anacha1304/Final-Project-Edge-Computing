@@ -153,6 +153,47 @@ El producto mínimo viable (MVP) está compuesto por las funcionalidades esencia
 
 Las funcionalidades adicionales, como monitoreo remoto o almacenamiento en la nube, se consideran mejoras opcionales (nice-to-have) y no son necesarias para el funcionamiento inicial del sistema.
 
+## Gestión del Backlog y Organización del Trabajo
+
+Para la planificación, seguimiento y ejecución del proyecto, se implementó una gestión estructurada del backlog utilizando GitHub Projects, lo que permite organizar de manera clara todas las tareas necesarias para el desarrollo del sistema.
+
+El backlog del proyecto se encuentra completamente definido y clasificado, incluyendo tanto las funcionalidades esenciales del sistema (MVP) como las mejoras opcionales. Cada tarea ha sido registrada como un *issue* dentro del repositorio, permitiendo su trazabilidad, priorización y control durante todo el ciclo de desarrollo.
+
+La organización del trabajo se basa en un flujo tipo Kanban, compuesto por las siguientes columnas:
+
+- **Backlog**: contiene todas las tareas pendientes por desarrollar  
+- **Ready**: tareas priorizadas listas para ser trabajadas  
+- **In Progress**: tareas en desarrollo activo  
+- **In Review**: tareas finalizadas en espera de validación  
+- **Done**: tareas completadas y aprobadas  
+
+Este enfoque permite visualizar el estado del proyecto en tiempo real, identificar posibles cuellos de botella y asegurar una distribución eficiente del trabajo dentro del equipo.
+
+Adicionalmente, cada tarea (*issue*) ha sido etiquetada según su importancia dentro del sistema:
+
+- **Must-have**: funcionalidades críticas necesarias para el MVP  
+- **Nice-to-have**: funcionalidades adicionales que aportan valor, pero no son indispensables  
+- **Spike**: tareas de investigación técnica necesarias para validar la viabilidad de componentes clave  
+
+Dentro del backlog se incluyen actividades fundamentales como:
+
+- Integración de sensores de movimiento  
+- Lectura y envío de datos desde el ESP32  
+- Comunicación entre ESP32 y Raspberry Pi  
+- Lógica de detección en Raspberry Pi  
+- Validación de acceso  
+- Control de cerradura electrónica  
+- Activación de alarmas  
+- Integración con la nube (opcional)  
+- Registro de eventos  
+- Desarrollo de interfaz de monitoreo local  
+
+Cada uno de estos *issues* representa una unidad de trabajo claramente definida, lo que facilita su asignación, seguimiento y validación dentro de los sprints establecidos.
+
+Durante el **Sprint 1 (Definición)** se realizó la creación del repositorio, la definición del backlog inicial, la priorización de tareas y la clasificación en *must-have* y *nice-to-have*, junto con la elaboración del presente documento (README). Esto permitió establecer una base sólida para el desarrollo del proyecto.
+
+En conjunto, el uso de GitHub Projects y la gestión basada en *issues* permite mantener una organización ágil, trazable y alineada con los objetivos del sistema, asegurando que cada avance contribuya directamente a la construcción del MVP.
+
 ## Cronograma del Proyecto
 
 El siguiente diagrama presenta el cronograma tentativo del proyecto, organizado en Sprints de una semana agrupados en Releases de dos semanas. Cada Release representa un avance funcional del sistema, iniciando con la validación de la viabilidad técnica (Spike) y finalizando con la entrega del sistema completo.
