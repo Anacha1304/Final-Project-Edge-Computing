@@ -216,6 +216,33 @@ El siguiente diagrama presenta el cronograma tentativo del proyecto, organizado 
 
 <img width="1113" height="1178" alt="image" src="https://github.com/user-attachments/assets/f964deee-070a-4c61-bd98-56991c66edad" />
 
+## Spike Arquitectónico (Gestión de Riesgos)
+
+El principal riesgo técnico del proyecto se encuentra en la comunicación eficiente, estable y en tiempo real entre el ESP32 y la Raspberry Pi 5, ya que esta interacción es fundamental para el funcionamiento del sistema de seguridad. Debido a que los datos de sensores deben ser transmitidos continuamente para su procesamiento y toma de decisiones, cualquier falla en la comunicación puede afectar directamente la detección de eventos y la ejecución de acciones críticas como la activación de alarmas o el bloqueo de accesos.
+
+Con el fin de reducir esta incertidumbre técnica, se definió un Spike enfocado en investigar y validar la viabilidad de la comunicación entre ambos dispositivos en un entorno real.
+
+### Objetivo del Spike
+
+Evaluar la capacidad del sistema para establecer una comunicación confiable entre el ESP32 y la Raspberry Pi, garantizando el envío y recepción de datos en tiempo real con baja latencia y alta estabilidad.
+
+### Actividades del Spike
+
+- Establecer conexión entre el ESP32 y la Raspberry Pi  
+- Implementar el envío de datos desde el ESP32 hacia la Raspberry Pi  
+- Validar la recepción y procesamiento básico de la información  
+- Evaluar la estabilidad de la comunicación bajo diferentes condiciones  
+- Medir la latencia y confiabilidad del sistema  
+- Comparar diferentes protocolos de comunicación (WiFi, Serial o MQTT local)  
+
+### Resultados esperados
+
+- Confirmación de que la comunicación entre dispositivos es viable  
+- Selección del protocolo de comunicación más adecuado  
+- Identificación de posibles limitaciones o fallos en la transmisión de datos  
+- Base técnica sólida para continuar con el desarrollo del sistema  
+
+Este Spike permite asegurar que la base de comunicación del sistema es funcional antes de avanzar con la implementación completa del MVP, reduciendo riesgos técnicos y mejorando la calidad del desarrollo.
 
 
 
