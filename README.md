@@ -173,22 +173,9 @@ Adicionalmente, cada tarea (*issue*) ha sido etiquetada según su importancia de
 
 - **Must-have**: funcionalidades críticas necesarias para el MVP  
 - **Nice-to-have**: funcionalidades adicionales que aportan valor, pero no son indispensables  
-- **Spike**: tareas de investigación técnica necesarias para validar la viabilidad de componentes clave  
-
-Dentro del backlog se incluyen actividades fundamentales como:
-
-- Integración de sensores de movimiento  
-- Lectura y envío de datos desde el ESP32  
-- Comunicación entre ESP32 y Raspberry Pi  
-- Lógica de detección en Raspberry Pi  
-- Validación de acceso  
-- Control de cerradura electrónica  
-- Activación de alarmas  
-- Integración con la nube (opcional)  
-- Registro de eventos  
-- Desarrollo de interfaz de monitoreo local  
-
-Cada uno de estos *issues* representa una unidad de trabajo claramente definida, lo que facilita su asignación, seguimiento y validación dentro de los sprints establecidos.
+- **Spike**: tareas de investigación técnica necesarias para validar la viabilidad de componentes clave
+  
+Cada uno de los *issues* representa una unidad de trabajo claramente definida, lo que facilita su asignación, seguimiento y validación dentro de los sprints establecidos.
 
 Durante el **Sprint 1 (Definición)** se realizó la creación del repositorio, la definición del backlog inicial, la priorización de tareas y la clasificación en *must-have* y *nice-to-have*, junto con la elaboración del presente documento (README). Esto permitió establecer una base sólida para el desarrollo del proyecto.
 
