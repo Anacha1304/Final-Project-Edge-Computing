@@ -149,9 +149,38 @@ En conjunto, estas decisiones permiten construir un sistema eficiente, autónomo
 
 ## Definición del MVP
 
-El producto mínimo viable (MVP) está compuesto por las funcionalidades esenciales que permiten el funcionamiento básico del sistema de seguridad, incluyendo la detección de movimiento, la validación de accesos y la activación de mecanismos de respuesta como cerraduras y alarmas.
+El Producto Mínimo Viable (MVP) del sistema consiste en la implementación de una solución de seguridad funcional basada en computación en el borde, capaz de operar de manera autónoma sin depender de una conexión a Internet.
 
-Las funcionalidades adicionales, como monitoreo remoto o almacenamiento en la nube, se consideran mejoras opcionales (nice-to-have) y no son necesarias para el funcionamiento inicial del sistema.
+El objetivo principal del MVP es validar que el sistema puede detectar eventos en tiempo real, procesarlos localmente y ejecutar acciones inmediatas, garantizando la protección del entorno incluso en escenarios de conectividad limitada o inexistente.
+
+Para lograrlo, el MVP incluye las siguientes funcionalidades esenciales:
+
+### Funcionalidades obligatorias (Must-have)
+
+- Detección de movimiento mediante sensores (PIR u otros)
+- Captura de eventos ante la detección de actividad
+- Transmisión de datos desde el ESP32 hacia la Raspberry Pi
+- Procesamiento local en la Raspberry Pi para identificar eventos sospechosos
+- Ejecución de lógica de decisión en tiempo real
+- Activación de mecanismos de respuesta (alarma sonora, encendido de luces, bloqueo de acceso)
+- Control de cerradura electrónica para permitir o denegar accesos
+- Registro local de eventos (logs básicos del sistema)
+- Comunicación estable entre los componentes del sistema (ESP32 y Raspberry Pi)
+
+Estas funcionalidades permiten validar el comportamiento central del sistema: **detección → análisis → decisión → acción**, sin dependencia de servicios externos.
+
+### Funcionalidades opcionales (Nice-to-have)
+
+Las siguientes funcionalidades no son necesarias para el funcionamiento inicial, pero representan mejoras que incrementan el valor del sistema:
+
+- Reconocimiento facial o validación avanzada de identidad
+- Interfaz web local para monitoreo del sistema
+- Notificaciones al usuario mediante aplicación o navegador
+- Integración con servicios en la nube para respaldo de información
+- Visualización de historial de eventos
+- Control remoto del sistema
+
+En conclusión, el MVP se enfoca en demostrar la viabilidad técnica y operativa del sistema en el borde, priorizando la autonomía, la respuesta en tiempo real y la seguridad, dejando las funcionalidades adicionales para etapas posteriores del desarrollo.
 
 
 ## Gestión del Backlog y Organización del Trabajo
