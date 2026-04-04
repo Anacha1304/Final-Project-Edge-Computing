@@ -153,6 +153,7 @@ El producto mínimo viable (MVP) está compuesto por las funcionalidades esencia
 
 Las funcionalidades adicionales, como monitoreo remoto o almacenamiento en la nube, se consideran mejoras opcionales (nice-to-have) y no son necesarias para el funcionamiento inicial del sistema.
 
+
 ## Gestión del Backlog y Organización del Trabajo
 
 Para la planificación, seguimiento y ejecución del proyecto, se implementó una gestión estructurada del backlog utilizando GitHub Projects, lo que permite organizar de manera clara todas las tareas necesarias para el desarrollo del sistema.
@@ -179,7 +180,6 @@ Cada uno de los *issues* representa una unidad de trabajo claramente definida, l
 
 Durante el **Sprint 1 (Definición)** se realizó la creación del repositorio, la definición del backlog inicial, la priorización de tareas y la clasificación en *must-have* y *nice-to-have*, junto con la elaboración del presente documento (README). Esto permitió establecer una base sólida para el desarrollo del proyecto.
 
-En conjunto, el uso de GitHub Projects y la gestión basada en *issues* permite mantener una organización ágil, trazable y alineada con los objetivos del sistema, asegurando que cada avance contribuya directamente a la construcción del MVP.
 
 ## Cronograma del Proyecto
 
