@@ -71,8 +71,10 @@ De manera opcional, el sistema puede conectarse a la nube para el almacenamiento
 5. **Interacción con la nube (opcional)**
    - Registro de eventos para auditoría  
    - Monitoreo remoto  
-   - Respaldo de información  
-### Esta organización permite que el sistema funcione de forma completamente autónoma en el borde, manteniendo la nube como un componente complementario y no crítico.
+   - Respaldo de información
+   - 
+Esta organización permite que el sistema funcione de forma completamente autónoma en el borde, manteniendo la nube como un componente complementario y no crítico.
+
 ---
 
 ### Presupuesto estimado (COP)
