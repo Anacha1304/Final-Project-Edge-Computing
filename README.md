@@ -76,20 +76,20 @@ De manera opcional, el sistema puede conectarse a la nube para el almacenamiento
 Esta organización permite que el sistema funcione de forma completamente autónoma en el borde, manteniendo la nube como un componente complementario y no crítico.
 ---
 
-### Presupuesto estimado
+### Presupuesto estimado (COP)
 
-| Componente              | Descripción                          | Costo Aproximado (USD) |
-|------------------------|--------------------------------------|------------------------|
-| Raspberry Pi 5         | Procesamiento principal              | 45 - 80               |
-| ESP32                  | Control de sensores y actuadores     | 8 - 15                |
-| Cámara                 | Captura de imagen/video              | 15 - 30               |
-| Sensor de movimiento   | Detección de presencia               | 3 - 8                 |
-| Cerradura electrónica  | Control de acceso físico             | 15 - 40               |
-| Alarma / buzzer        | Señalización de eventos              | 2 - 6                 |
-| Fuente y cableado      | Alimentación y conexión              | 10 - 20               |
-| **Total estimado**     |                                      | **101 - 207**         |
+| Componente            | Descripción                      | Costo Aproximado (COP)    |
+|-----------------------|----------------------------------|---------------------------|
+| Raspberry Pi 5        | Procesamiento principal          | 180,000 – 320,000         |
+| ESP32                 | Control de sensores y actuadores | 32,000 – 60,000           |
+| Cámara                | Captura de imagen/video          | 60,000 – 120,000          |
+| Sensor de movimiento  | Detección de presencia           | 12,000 – 32,000           |
+| Cerradura electrónica | Control de acceso físico         | 60,000 – 160,000          |
+| Alarma / buzzer       | Señalización de eventos          | 8,000 – 24,000            |
+| Fuente y cableado     | Alimentación y conexión          | 40,000 – 80,000           |
+| **Total estimado**    |                                  | **392,000 – 796,000 COP** |
 
-El presupuesto fue definido considerando componentes accesibles en el mercado, buscando un balance entre costo y funcionalidad para entornos reales de pequeña escala.
+El presupuesto fue definido considerando componentes accesibles en el mercado, buscando un balance entre costo y funcionalidad para entornos reales de pequeña escala. Además, los valores son estimaciones basadas en precios promedio del mercado y pueden variar según disponibilidad de componentes y proveedores.
 
 ---
 
