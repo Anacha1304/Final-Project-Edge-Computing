@@ -42,45 +42,56 @@ De manera opcional, el sistema puede conectarse a la nube para el almacenamiento
 
 <img width="1759" height="761" alt="image" src="https://github.com/user-attachments/assets/1e6b0373-4186-4fb3-b94d-f6fc23a0e124" />
 
+#### Flujo de funcionamiento Detallado
 
+Este flujo describe paso a paso cómo el sistema detecta eventos, valida accesos y ejecuta acciones, priorizando procesamiento local en el Edge.
 
-#### Flujo de funcionamiento
+1. **Detección de eventos**
+   - **Sensor de movimiento (PIR u otro):** detecta presencia → envía señal al ESP32.
+   - **Cámara:** captura imagen o video ante detección de movimiento → envía datos al ESP32.
+   - **Teclado / RFID / PIN:** usuario ingresa clave o identifica tarjeta → ESP32 lee la entrada.
 
-1. **Captura de datos**
-   - Sensores de movimiento detectan presencia o cambios en el entorno  
-   - Cámara permite capturar imágenes o secuencias para validación de acceso  
-   - Dispositivos de entrada (teclado, RFID u otros) permiten autenticación  
+2. **Transmisión de datos al procesamiento principal**
+   - ESP32 recibe señales de sensores y entradas.
+   - ESP32 envía información a la **Raspberry Pi 5** vía comunicación local (WiFi, Serial o MQTT).
 
-2. **Procesamiento principal en Raspberry Pi 5**
-   - Recepción directa de datos provenientes de sensores o sistemas conectados  
-   - Análisis de eventos en tiempo real  
-   - Validación de usuarios (por ejemplo, rostro autorizado o patrón válido)  
-   - Clasificación de eventos como normales o sospechosos  
-   - Ejecución de la lógica de decisión del sistema  
+3. **Procesamiento y validación en Raspberry Pi 5**
+   - **Recepción y preprocesamiento:** limpia y organiza los datos recibidos.
+   - **Validación de usuario:**
+     - Comparación de rostro capturado con base de datos de usuarios autorizados.
+     - Verificación de clave PIN o RFID.
+   - **Clasificación de eventos:**
+     - Evento normal → solo registro.
+     - Evento sospechoso → genera alerta.
+   - **Toma de decisiones:** define acción a ejecutar según tipo de evento (ej. abrir cerradura, activar alarma).
 
-3. **Ejecución de acciones a través del ESP32**
-   - Recepción de órdenes desde la Raspberry Pi 5  
-   - Control de cerraduras electrónicas  
-   - Activación de alarmas  
-   - Encendido de luces o señales de alerta  
+4. **Ejecución de acciones vía ESP32**
+   - Raspberry Pi envía orden de acción al ESP32.
+   - **Acciones posibles:**
+     - Control de cerraduras electrónicas (abrir / bloquear acceso).
+     - Activación de alarmas sonoras o luces de alerta.
+     - Notificación de intento fallido de acceso.
 
-4. **Salida de información**
-   - Visualización de alertas en pantalla local  
-   - Notificaciones del estado del sistema  
+5. **Registro y monitoreo**
+   - Guardado local de logs de eventos (tipo, hora, usuario, resultado).
+   - Opcional: envío de eventos a la nube para auditoría o monitoreo remoto.
 
-5. **Interacción con la nube (opcional)**
-   - Registro de eventos para auditoría  
-   - Monitoreo remoto  
-   - Respaldo de información
-   - 
-Esta organización permite que el sistema funcione de forma completamente autónoma en el borde, manteniendo la nube como un componente complementario y no crítico.
+6. **Resumen del flujo completo**
+   Detección (sensor/PIR/cámara/teclado)
+   → Transmisión ESP32
+   → Procesamiento Raspberry Pi
+   → Validación (usuario/clave/rostro)
+   → Clasificación evento
+   → Orden ESP32
+   → Acción física (cerradura/alarma/luces)
+   → Registro y notificación
 
----
+## Este flujo asegura **procesamiento en tiempo real**, independencia de la nube y seguridad local, cumpliendo con los principios de **Edge Computing**.
 
 ### Presupuesto estimado (COP)
 
 | Componente            | Descripción                      | Costo Aproximado (COP)    |
-|-----------------------|----------------------------------|---------------------------|
+| --------------------- | -------------------------------- | ------------------------- |
 | Raspberry Pi 5        | Procesamiento principal          | 180,000 – 320,000         |
 | ESP32                 | Control de sensores y actuadores | 32,000 – 60,000           |
 | Cámara                | Captura de imagen/video          | 60,000 – 120,000          |
@@ -104,28 +115,28 @@ El ESP32 es un microcontrolador optimizado para aplicaciones de bajo consumo y p
 
 #### ESP32
 
-- **Memoria limitada:** restringe el manejo de múltiples sensores y procesos simultáneos en el sistema  
-- **Capacidad de procesamiento baja:** no permite ejecutar tareas como reconocimiento facial o análisis de video, por lo que estas deben delegarse a la Raspberry Pi 5  
-- **Almacenamiento reducido:** solo permite guardar firmware y datos temporales, no registros históricos o imágenes del sistema  
-- **Limitación en pines de conexión:** restringe la cantidad de sensores (movimiento, cerraduras) que se pueden conectar directamente  
-- **Dependencia de comunicación inalámbrica:** puede presentar fallos o interferencias en la transmisión de datos hacia la Raspberry Pi  
-- **Limitación en manejo de periféricos complejos:** no es adecuado para manejar directamente cámaras o dispositivos de alto consumo de datos  
+- **Memoria limitada:** restringe el manejo de múltiples sensores y procesos simultáneos en el sistema
+- **Capacidad de procesamiento baja:** no permite ejecutar tareas como reconocimiento facial o análisis de video, por lo que estas deben delegarse a la Raspberry Pi 5
+- **Almacenamiento reducido:** solo permite guardar firmware y datos temporales, no registros históricos o imágenes del sistema
+- **Limitación en pines de conexión:** restringe la cantidad de sensores (movimiento, cerraduras) que se pueden conectar directamente
+- **Dependencia de comunicación inalámbrica:** puede presentar fallos o interferencias en la transmisión de datos hacia la Raspberry Pi
+- **Limitación en manejo de periféricos complejos:** no es adecuado para manejar directamente cámaras o dispositivos de alto consumo de datos
 
 #### Raspberry Pi 5
 
-- **Consumo energético elevado:** requiere una fuente de alimentación estable para operar continuamente en el sistema de seguridad  
-- **Generación de calor:** bajo cargas de procesamiento (por ejemplo, validación de accesos) puede requerir disipación térmica  
-- **Dependencia de almacenamiento externo:** el rendimiento depende del uso de microSD o SSD, lo que puede afectar la velocidad del sistema  
-- **Capacidad limitada frente a la nube:** no puede ejecutar modelos de inteligencia artificial complejos, por lo que se deben usar soluciones optimizadas  
-- **Rendimiento variable bajo carga continua:** el procesamiento constante de eventos puede afectar la estabilidad del sistema  
-- **Dependencia del sistema operativo:** introduce complejidad en configuración, mantenimiento y posibles fallos  
-- **Riesgo de corrupción de datos:** si no se gestiona correctamente el apagado, pueden perderse registros del sistema  
+- **Consumo energético elevado:** requiere una fuente de alimentación estable para operar continuamente en el sistema de seguridad
+- **Generación de calor:** bajo cargas de procesamiento (por ejemplo, validación de accesos) puede requerir disipación térmica
+- **Dependencia de almacenamiento externo:** el rendimiento depende del uso de microSD o SSD, lo que puede afectar la velocidad del sistema
+- **Capacidad limitada frente a la nube:** no puede ejecutar modelos de inteligencia artificial complejos, por lo que se deben usar soluciones optimizadas
+- **Rendimiento variable bajo carga continua:** el procesamiento constante de eventos puede afectar la estabilidad del sistema
+- **Dependencia del sistema operativo:** introduce complejidad en configuración, mantenimiento y posibles fallos
+- **Riesgo de corrupción de datos:** si no se gestiona correctamente el apagado, pueden perderse registros del sistema
 
 #### Integración del sistema
 
-- **Latencia en la comunicación entre ESP32 y Raspberry Pi:** puede afectar la sincronización de eventos en tiempo real  
-- **Dependencia de protocolos de comunicación:** errores en la comunicación pueden impactar la detección y respuesta del sistema  
-- **Complejidad de integración:** al combinar múltiples dispositivos, aumenta la probabilidad de fallos y la dificultad de mantenimiento  
+- **Latencia en la comunicación entre ESP32 y Raspberry Pi:** puede afectar la sincronización de eventos en tiempo real
+- **Dependencia de protocolos de comunicación:** errores en la comunicación pueden impactar la detección y respuesta del sistema
+- **Complejidad de integración:** al combinar múltiples dispositivos, aumenta la probabilidad de fallos y la dificultad de mantenimiento
 
 ---
 
@@ -139,14 +150,13 @@ El sistema debe operar bajo condiciones de conectividad limitada o inexistente, 
 
 A partir de las restricciones anteriores, se definieron las siguientes decisiones arquitectónicas:
 
-- Separar el sistema en dos niveles (ESP32 y Raspberry Pi) para distribuir la carga de trabajo  
-- Mantener el procesamiento crítico en el borde para garantizar respuesta inmediata  
-- Evitar el envío constante de datos a la nube para reducir consumo de red  
-- Implementar lógica de decisión local para asegurar autonomía del sistema  
-- Utilizar la nube únicamente como componente de apoyo para monitoreo y almacenamiento  
+- Separar el sistema en dos niveles (ESP32 y Raspberry Pi) para distribuir la carga de trabajo
+- Mantener el procesamiento crítico en el borde para garantizar respuesta inmediata
+- Evitar el envío constante de datos a la nube para reducir consumo de red
+- Implementar lógica de decisión local para asegurar autonomía del sistema
+- Utilizar la nube únicamente como componente de apoyo para monitoreo y almacenamiento
 
 En conjunto, estas decisiones permiten construir un sistema eficiente, autónomo y alineado con las limitaciones reales del hardware embebido, cumpliendo con los principios fundamentales de la computación en el borde.
-
 
 ## Definición del MVP
 
@@ -183,33 +193,31 @@ Las siguientes funcionalidades no son necesarias para el funcionamiento inicial,
 
 En conclusión, el MVP se enfoca en demostrar la viabilidad técnica y operativa del sistema en el borde, priorizando la autonomía, la respuesta en tiempo real y la seguridad, dejando las funcionalidades adicionales para etapas posteriores del desarrollo.
 
-
 ## Gestión del Backlog y Organización del Trabajo
 
 Para la planificación, seguimiento y ejecución del proyecto, se implementó una gestión estructurada del backlog utilizando GitHub Projects, lo que permite organizar de manera clara todas las tareas necesarias para el desarrollo del sistema.
 
-El backlog del proyecto se encuentra completamente definido y clasificado, incluyendo tanto las funcionalidades esenciales del sistema (MVP) como las mejoras opcionales. Cada tarea ha sido registrada como un *issue* dentro del repositorio, permitiendo su trazabilidad, priorización y control durante todo el ciclo de desarrollo.
+El backlog del proyecto se encuentra completamente definido y clasificado, incluyendo tanto las funcionalidades esenciales del sistema (MVP) como las mejoras opcionales. Cada tarea ha sido registrada como un _issue_ dentro del repositorio, permitiendo su trazabilidad, priorización y control durante todo el ciclo de desarrollo.
 
 La organización del trabajo se basa en un flujo tipo Kanban, compuesto por las siguientes columnas:
 
-- **Backlog**: contiene todas las tareas pendientes por desarrollar  
-- **Ready**: tareas priorizadas listas para ser trabajadas  
-- **In Progress**: tareas en desarrollo activo  
-- **In Review**: tareas finalizadas en espera de validación  
-- **Done**: tareas completadas y aprobadas  
+- **Backlog**: contiene todas las tareas pendientes por desarrollar
+- **Ready**: tareas priorizadas listas para ser trabajadas
+- **In Progress**: tareas en desarrollo activo
+- **In Review**: tareas finalizadas en espera de validación
+- **Done**: tareas completadas y aprobadas
 
 Este enfoque permite visualizar el estado del proyecto en tiempo real, identificar posibles cuellos de botella y asegurar una distribución eficiente del trabajo dentro del equipo.
 
-Adicionalmente, cada tarea (*issue*) ha sido etiquetada según su importancia dentro del sistema:
+Adicionalmente, cada tarea (_issue_) ha sido etiquetada según su importancia dentro del sistema:
 
-- **Must-have**: funcionalidades críticas necesarias para el MVP  
-- **Nice-to-have**: funcionalidades adicionales que aportan valor, pero no son indispensables  
+- **Must-have**: funcionalidades críticas necesarias para el MVP
+- **Nice-to-have**: funcionalidades adicionales que aportan valor, pero no son indispensables
 - **Spike**: tareas de investigación técnica necesarias para validar la viabilidad de componentes clave
-  
-Cada uno de los *issues* representa una unidad de trabajo claramente definida, lo que facilita su asignación, seguimiento y validación dentro de los sprints establecidos.
 
-Durante el **Sprint 1 (Definición)** se realizó la creación del repositorio, la definición del backlog inicial, la priorización de tareas y la clasificación en *must-have* y *nice-to-have*, junto con la elaboración del presente documento (README). Esto permitió establecer una base sólida para el desarrollo del proyecto.
+Cada uno de los _issues_ representa una unidad de trabajo claramente definida, lo que facilita su asignación, seguimiento y validación dentro de los sprints establecidos.
 
+Durante el **Sprint 1 (Definición)** se realizó la creación del repositorio, la definición del backlog inicial, la priorización de tareas y la clasificación en _must-have_ y _nice-to-have_, junto con la elaboración del presente documento (README). Esto permitió establecer una base sólida para el desarrollo del proyecto.
 
 ## Cronograma del Proyecto
 
@@ -229,21 +237,18 @@ Evaluar la capacidad del sistema para establecer una comunicación confiable ent
 
 ### Actividades del Spike
 
-- Establecer conexión entre el ESP32 y la Raspberry Pi  
-- Implementar el envío de datos desde el ESP32 hacia la Raspberry Pi  
-- Validar la recepción y procesamiento básico de la información  
-- Evaluar la estabilidad de la comunicación bajo diferentes condiciones  
-- Medir la latencia y confiabilidad del sistema  
-- Comparar diferentes protocolos de comunicación (WiFi, Serial o MQTT local)  
+- Establecer conexión entre el ESP32 y la Raspberry Pi
+- Implementar el envío de datos desde el ESP32 hacia la Raspberry Pi
+- Validar la recepción y procesamiento básico de la información
+- Evaluar la estabilidad de la comunicación bajo diferentes condiciones
+- Medir la latencia y confiabilidad del sistema
+- Comparar diferentes protocolos de comunicación (WiFi, Serial o MQTT local)
 
 ### Resultados esperados
 
-- Confirmación de que la comunicación entre dispositivos es viable  
-- Selección del protocolo de comunicación más adecuado  
-- Identificación de posibles limitaciones o fallos en la transmisión de datos  
-- Base técnica sólida para continuar con el desarrollo del sistema  
+- Confirmación de que la comunicación entre dispositivos es viable
+- Selección del protocolo de comunicación más adecuado
+- Identificación de posibles limitaciones o fallos en la transmisión de datos
+- Base técnica sólida para continuar con el desarrollo del sistema
 
 Este Spike permite asegurar que la base de comunicación del sistema es funcional antes de avanzar con la implementación completa del MVP, reduciendo riesgos técnicos y mejorando la calidad del desarrollo.
-
-
-
